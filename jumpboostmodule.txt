@@ -1,0 +1,119 @@
+local JumpBoostModule = {}
+
+local player = game.Players.LocalPlayer
+local char = player.Character or player.CharacterAdded:Wait()
+local humanoid = char:WaitForChild("Humanoid")
+local hrp = char:WaitForChild("HumanoidRootPart")
+local UIS = game:GetService("UserInputService")
+
+local jumpPower = 265
+local upForce = 265
+local bv = nil
+local holding = false
+
+-- funkcje boostu
+local function startUpBoost()
+	humanoid.JumpPower = jumpPower
+	humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+	if bv then bv:Destroy() end
+	bv = Instance.new("BodyVelocity")
+	bv.MaxForce = Vector3.new(0,1e6,0)
+	bv.Velocity = Vector3.new(0,upForce,0)
+	bv.Parent = hrp
+end
+
+local function stopUpBoost()
+	if bv then bv:Destroy() bv = nil end
+	humanoid.JumpPower = 50
+end
+
+-- GUI
+local screenGui = Instance.new("ScreenGui")
+screenGui.Parent = player:WaitForChild("PlayerGui")
+screenGui.ResetOnSpawn = false
+
+local button = Instance.new("TextButton")
+button.Size = UDim2.new(0,125,0,48)
+button.Position = UDim2.new(0.5,-280,0,40)
+button.BackgroundColor3 = Color3.fromRGB(25,25,25)
+button.BackgroundTransparency = 0.2
+button.Text = "Jump"
+button.Font = Enum.Font.GothamBold
+button.TextSize = 20
+button.TextColor3 = Color3.fromRGB(255,255,255)
+button.Parent = screenGui
+
+local corner = Instance.new("UICorner")
+corner.CornerRadius = UDim.new(0,14)
+corner.Parent = button
+
+local outline = Instance.new("TextLabel")
+outline.Size = UDim2.new(1,0,1,0)
+outline.Position = UDim2.new(0,0,0,0)
+outline.BackgroundTransparency = 1
+outline.Text = "Jump"
+outline.Font = Enum.Font.GothamBold
+outline.TextSize = 20
+outline.TextColor3 = Color3.fromRGB(200,0,255)
+outline.TextStrokeTransparency = 0
+outline.TextStrokeColor3 = Color3.fromRGB(255,0,255)
+outline.ZIndex = 0
+outline.Parent = button
+
+-- DRAGGING
+local dragging = false
+local dragStart
+local startPos
+
+button.InputBegan:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+		dragging = true
+		dragStart = input.Position
+		startPos = button.Position
+		input.Changed:Connect(function()
+			if input.UserInputState == Enum.UserInputState.End then
+				dragging = false
+			end
+		end)
+	end
+end)
+
+button.InputChanged:Connect(function(input)
+	if dragging and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
+		local delta = input.Position - dragStart
+		button.Position = UDim2.new(
+			startPos.X.Scale,
+			startPos.X.Offset + delta.X,
+			startPos.Y.Scale,
+			startPos.Y.Offset + delta.Y
+		)
+	end
+end)
+
+-- obsługa boostu
+button.MouseButton1Down:Connect(function()
+	holding = true
+	button.Text = "Jump ON"
+	outline.Text = "Jump ON"
+	startUpBoost()
+end)
+
+button.MouseButton1Up:Connect(function()
+	holding = false
+	button.Text = "Jump"
+	outline.Text = "Jump"
+	stopUpBoost()
+end)
+
+UIS.InputEnded:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 then
+		if holding then
+			holding = false
+			button.Text = "Jump"
+			outline.Text = "Jump"
+			stopUpBoost()
+		end
+	end
+end)
+
+return JumpBoostModule
