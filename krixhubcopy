@@ -61,8 +61,16 @@ local Section = Tab:NewSection("◈・Information")
 Section:NewLabel("Executor: " .. executor)
 Section:NewLabel("Status: " .. execStatus)
 
-local Tab = Window:NewTab("・Aimbot")
+local Tab = Window:NewTab("・PVP")
 local Section = Tab:NewSection("・Settings")
+
+Section:NewTextBox("Speed Hack", "WalkSpeedValue", function(speedfunc)
+    local num = tonumber(speedfunc)
+    if num then
+        getgenv().WalkSpeedValue = num
+        UiSettingsModule:SetWalkSpeed(num)
+    end
+end)
 
 local AimlockPlayersMiniTogglePlayersToggle = Section:NewToggle("・Aimlock Mini Toggle Players", "Lock onto nearest player", function(state)
     AimlockModule:SetMiniTogglePlayerAimlock(state)
@@ -72,6 +80,16 @@ end)
 local PredictionToggle = Section:NewToggle("・Prediction", "Predict enemy movement", function(state)
     AimlockModule:SetPrediction(state)
     Settings["Prediction"] = state
+end)
+
+local ESPPlayersToggle = Section:NewToggle("・ESP Players", "Toggle Player ESP", function(state)
+    ESPModule:SetESP(state)
+    Settings["ESPPlayers"] = state
+end)
+
+local FastAttackToggle = Section:NewToggle("・Fast Attack", "Fast Attack", function(state)
+    StuffsModule:SetFastAttack(state)
+    Settings["FastAttack"] = state
 end)
 
 Section:NewDropdown("・Prediction Amount | Default 0.1s", "Select max Prediction for Aimlock", {"0.2", "0.3", "0.4"}, function(selected)
@@ -162,16 +180,6 @@ end)
 local Tab = Window:NewTab("・Features")
 local Section = Tab:NewSection("・Settings")
 
-local ESPPlayersToggle = Section:NewToggle("・ESP Players", "Toggle Player ESP", function(state)
-    ESPModule:SetESP(state)
-    Settings["ESPPlayers"] = state
-end)
-
-local FastAttackToggle = Section:NewToggle("・Fast Attack", "Fast Attack", function(state)
-    StuffsModule:SetFastAttack(state)
-    Settings["FastAttack"] = state
-end)
-
 local V3SkillToggle = Section:NewToggle("・V3 Skill", "Auto activate V3 ability", function(state)
     ESPModule:SetV3(state)
     Settings["V3Skill"] = state
@@ -210,14 +218,6 @@ end)
 local FpsOrPingsToggle = Section:NewToggle("・Fps Or Pings", "Display Ping or Fps", function(state)
     StuffsModule:SetPingsOrFps(state)
     Settings["FpsOrPings"] = state
-end)
-
-Section:NewTextBox("Speed Hack", "WalkSpeedValue", function(speedfunc)
-    local num = tonumber(speedfunc)
-    if num then
-        getgenv().WalkSpeedValue = num
-        UiSettingsModule:SetWalkSpeed(num)
-    end
 end)
 
 local FpsBoostToggle = Section:NewToggle("・Fps Boost", "Increase Fps", function(state)
