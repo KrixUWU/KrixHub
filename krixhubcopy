@@ -3,6 +3,7 @@ local AimlockModule = loadstring(game:HttpGet("https://raw.githubusercontent.com
 local ESPModule = loadstring(game:HttpGet("https://raw.githubusercontent.com/jaanu91/Ip/refs/heads/main/Gk"))()
 local SilentAimModule = loadstring(game:HttpGet("https://raw.githubusercontent.com/jaanu91/Ip/refs/heads/main/Bg"))()
 local JumpBoostModule = loadstring(game:HttpGet("https://raw.githubusercontent.com/KrixUWU/KrixHub/refs/heads/main/jumpboostmodule"))()
+local CFModule = loadstring(game:HttpGet("https://raw.githubusercontent.com/KrixUWU/KrixHub/refs/heads/main/CF"))()
 local StuffsModule = loadstring(game:HttpGet("https://raw.githubusercontent.com/jaanu91/Ip/refs/heads/main/Stuf"))()
 local OthersStuffsModule = loadstring(game:HttpGet("https://raw.githubusercontent.com/jaanu91/Ip/refs/heads/main/Mot"))()
 local UiSettingsModule = loadstring(game:HttpGet("https://raw.githubusercontent.com/jaanu91/Ip/refs/heads/main/Vot"))()
