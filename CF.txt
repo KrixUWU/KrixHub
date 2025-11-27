@@ -1,0 +1,24 @@
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local player = Players.LocalPlayer
+
+local SPEED = 1 -- dostosuj sobie ile chcesz
+
+local function setupCharacter(char)
+	local HRP = char:WaitForChild("HumanoidRootPart")
+	local Hum = char:WaitForChild("Humanoid")
+
+	RunService.RenderStepped:Connect(function()
+		local moveDir = Hum.MoveDirection
+		if moveDir.Magnitude > 0 then
+			HRP.CFrame = HRP.CFrame + (moveDir * SPEED)
+		end
+	end)
+end
+
+player.CharacterAdded:Connect(setupCharacter)
+
+if player.Character then
+	setupCharacter(player.Character)
+end
