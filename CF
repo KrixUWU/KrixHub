@@ -3,7 +3,7 @@ local RunService = game:GetService("RunService")
 
 local player = Players.LocalPlayer
 
-local SPEED = 1 -- dostosuj sobie ile chcesz
+local SPEED = 3 -- dostosuj sobie ile chcesz
 
 local function setupCharacter(char)
 	local HRP = char:WaitForChild("HumanoidRootPart")
