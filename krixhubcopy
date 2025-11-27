@@ -25,7 +25,7 @@ toggleButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 toggleButton.BackgroundTransparency = 0.2
 toggleButton.BorderSizePixel = 0
 toggleButton.ZIndex = 9999
-toggleButton.Image = "rbxassetid://76926193047725"
+toggleButton.Image = "rbxassetid://116876297689275"
 toggleButton.Parent = toggleGui
 
 local toggleCorner = Instance.new("UICorner")
@@ -269,14 +269,6 @@ local TeleportFruitToggle = Section:NewToggle("・Bring Fruits", "It take few se
     Settings["TeleportFruit"] = state
 end)
 
-local Tab = Window:NewTab("⚡️・RTX")
-local Section = Tab:NewSection(❄️・RTX VISUALS")
-
-Section:NewDropdown("・RTX Graphics Mode", "Choose between Autumn or Summer or Spring or Winter", {"Autumn", "Summer", "Spring", "Winter"}, function(selected)
-    ESPModule:SetRTXMode(selected)
-    Settings["RTXMode"] = selected
-end)
-
 local Tab = Window:NewTab("⚙・Settings Manager")
 local Section = Tab:NewSection("💾・Settings")
 
@@ -286,10 +278,15 @@ Section:NewTextBox("Paste Job Id Here", "Paste JobId and press Enter", function(
     end
 end)
 
+Section:NewDropdown("・RTX Graphics Mode", "Choose between Autumn or Summer or Spring or Winter", {"Autumn", "Summer", "Spring", "Winter"}, function(selected)
+    ESPModule:SetRTXMode(selected)
+    Settings["RTXMode"] = selected
+end)
+
 Section:NewButton("Save Current Settings", "Save all current settings", function()
     OthersStuffsModule.SaveSettings(Settings)
     game:GetService("StarterGui"):SetCore("SendNotification", {
-        Title = "Sapi Hub",
+        Title = "KrixHub",
         Text = "Settings Saved!",
         Duration = 4
     })
@@ -299,7 +296,7 @@ Section:NewButton("Reset Settings", "Clear saved settings", function()
     OthersStuffsModule.ResetSettings()
     Settings = {} -- also clear local
     game:GetService("StarterGui"):SetCore("SendNotification", {
-        Title = "Sapi Hub",
+        Title = "KrixHub",
         Text = "Settings Reset!",
         Duration = 4
     })
