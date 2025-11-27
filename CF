@@ -1,23 +1,19 @@
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
-local UIS = game:GetService("UserInputService")
 
 local player = Players.LocalPlayer
-local tpWalkEnabled = false
-local speed = 2
 
 local function setupCharacter(char)
     local HRP = char:WaitForChild("HumanoidRootPart")
     local Hum = char:WaitForChild("Humanoid")
 
     RunService.RenderStepped:Connect(function()
-        if tpWalkEnabled then
+        if _G.tpWalkEnabled then
             local dir = Hum.MoveDirection
 
-            -- obrót natychmiastowy zgodnie z kierunkiem ruchu
             if dir.Magnitude > 0 then
-                HRP.CFrame = CFrame.new(HRP.Position, HRP.Position + dir) 
-                HRP.CFrame = HRP.CFrame + dir * speed
+                HRP.CFrame = CFrame.new(HRP.Position, HRP.Position + dir)
+                HRP.CFrame = HRP.CFrame + dir * _G.speed
             end
         end
     end)
@@ -26,39 +22,67 @@ end
 player.CharacterAdded:Connect(setupCharacter)
 if player.Character then setupCharacter(player.Character) end
 
+local player = game.Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
 -- GUI
-local ScreenGui = Instance.new("ScreenGui", game.Players.LocalPlayer.PlayerGui)
-local Frame = Instance.new("Frame", ScreenGui)
-Frame.Size = UDim2.new(0, 200, 0, 150)
-Frame.Position = UDim2.new(0, 20, 0, 200)
-Frame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.ResetOnSpawn = false
+ScreenGui.Parent = playerGui
+
+local Frame = Instance.new("Frame")
+Frame.Size = UDim2.new(0, 220, 0, 160)
+Frame.Position = UDim2.new(0, 30, 0, 200)
+Frame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+Frame.BorderSizePixel = 0
+Frame.Parent = ScreenGui
+
+local UIStroke = Instance.new("UIStroke", Frame)
+UIStroke.Thickness = 2
+UIStroke.Color = Color3.fromRGB(0, 255, 0)
+
+local title = Instance.new("TextLabel", Frame)
+title.Size = UDim2.new(1, 0, 0, 30)
+title.BackgroundTransparency = 1
+title.Text = "TP Walk Menu"
+title.TextColor3 = Color3.fromRGB(255, 255, 255)
+title.TextScaled = true
 
 local Toggle = Instance.new("TextButton", Frame)
 Toggle.Size = UDim2.new(1, -20, 0, 40)
-Toggle.Position = UDim2.new(0, 10, 0, 10)
+Toggle.Position = UDim2.new(0, 10, 0, 40)
 Toggle.Text = "TP Walk: OFF"
+Toggle.TextScaled = true
+Toggle.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+Toggle.BorderSizePixel = 0
 
 local SpeedLabel = Instance.new("TextLabel", Frame)
 SpeedLabel.Size = UDim2.new(1, -20, 0, 20)
-SpeedLabel.Position = UDim2.new(0, 10, 0, 60)
+SpeedLabel.Position = UDim2.new(0, 10, 0, 90)
 SpeedLabel.Text = "Speed: 2"
+SpeedLabel.TextScaled = true
+SpeedLabel.BackgroundTransparency = 1
+SpeedLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 
-local SpeedSlider = Instance.new("TextButton", Frame)
-SpeedSlider.Size = UDim2.new(1, -20, 0, 40)
-SpeedSlider.Position = UDim2.new(0, 10, 0, 90)
-SpeedSlider.Text = "Increase Speed"
+local SpeedBtn = Instance.new("TextButton", Frame)
+SpeedBtn.Size = UDim2.new(1, -20, 0, 35)
+SpeedBtn.Position = UDim2.new(0, 10, 0, 115)
+SpeedBtn.Text = "Change Speed"
+SpeedBtn.TextScaled = true
+SpeedBtn.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+SpeedBtn.BorderSizePixel = 0
 
--- logika
-local tpWalkEnabled = false
-local speed = 2
+-- LOGIKA
+_G.tpWalkEnabled = false
+_G.speed = 2
 
 Toggle.MouseButton1Click:Connect(function()
-    tpWalkEnabled = not tpWalkEnabled
-    Toggle.Text = "TP Walk: " .. (tpWalkEnabled and "ON" or "OFF")
+    _G.tpWalkEnabled = not _G.tpWalkEnabled
+    Toggle.Text = "TP Walk: " .. (_G.tpWalkEnabled and "ON" or "OFF")
 end)
 
-SpeedSlider.MouseButton1Click:Connect(function()
-    speed = speed + 1
-    if speed > 20 then speed = 1 end
-    SpeedLabel.Text = "Speed: " .. speed
+SpeedBtn.MouseButton1Click:Connect(function()
+    _G.speed = _G.speed + 1
+    if _G.speed > 20 then _G.speed = 1 end
+    SpeedLabel.Text = "Speed: " .. _G.speed
 end)
