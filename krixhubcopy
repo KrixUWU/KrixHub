@@ -122,7 +122,7 @@ Section:NewDropdown("・Prediction Future | Default 0.1s", "Select max Predictio
 end)
 
 -- Silent Aim Distance Limit Dropdown
-Section:NewDropdown("・Distance Limit | Default 1000m", "Select max distance for aimbot", {"200", "400", "600"}, function(selected)
+Section:NewDropdown("・Distance Limit | Default 1000m", "Select max distance for aimbot", {"200", "350", "400", "600"}, function(selected)
     local num = tonumber(selected)
     if num then
         SilentAimModule:SetDistanceLimit(num)
