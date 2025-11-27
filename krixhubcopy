@@ -64,7 +64,7 @@ Section:NewLabel("Status: " .. execStatus)
 local Tab = Window:NewTab("・Aimbot")
 local Section = Tab:NewSection("・Settings")
 
-local AimlockPlayersMiniTogglePlayersToggle = Section:NewToggle("・CamLock", "Lock onto nearest player", function(state)
+local AimlockPlayersMiniTogglePlayersToggle = Section:NewToggle("・Aimlock Mini Toggle Players", "Lock onto nearest player", function(state)
     AimlockModule:SetMiniTogglePlayerAimlock(state)
     Settings["AimlockPlayersMiniTogglePlayers"] = state
 end)
