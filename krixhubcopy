@@ -1,5 +1,5 @@
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/land9678/Sapi-Hub-V1/refs/heads/main/KavoUI.txt"))()
-local AimlockModule = loadstring(game:HttpGet("https://raw.githubusercontent.com/jaanu91/Ip/refs/heads/main/Dk"))()
+local AimlockModule = loadstring(game:HttpGet("https://raw.githubusercontent.com/KrixUWU/KrixHub/refs/heads/main/Dk"))()
 local ESPModule = loadstring(game:HttpGet("https://raw.githubusercontent.com/jaanu91/Ip/refs/heads/main/Gk"))()
 local SilentAimModule = loadstring(game:HttpGet("https://raw.githubusercontent.com/jaanu91/Ip/refs/heads/main/Bg"))()
 local JumpBoostModule = loadstring(game:HttpGet("https://raw.githubusercontent.com/KrixUWU/KrixHub/refs/heads/main/jumpboostmodule"))()
