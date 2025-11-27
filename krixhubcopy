@@ -81,18 +81,19 @@ Section:NewDropdown("・Prediction Amount | Default 0.1s", "Select max Predictio
     end
 end)
 
-local SilentMiniTogglePlayersToggle = Section:NewToggle("・SilentAim", "Lock onto nearest player", function(state)
+local SilentMiniToggleToggle = Section:NewToggle("・SilentAim", "Lock onto Players + NPC", function(state)
     SilentAimModule:SetMiniTogglePlayerSilentAim(state)
     SilentAimModule:SetMiniToggleNpcSilentAim(state)
-    Settings["SilentMiniTogglePlayers"] = state
-    Settings["SilentMiniToggleNPC"] = state
+    Settings["SilentMiniToggle"] = state
 end)
 
+-- Silent Aim Prediction Toggle
 local SilentAimPedictionToggle = Section:NewToggle("・SilentAim Prediction", "Prediction on target", function(state)
     SilentAimModule:SetPrediction(state)
     Settings["SilentAimPediction"] = state
 end)
 
+-- Silent Aim Future Prediction Dropdown
 Section:NewDropdown("・Prediction Future | Default 0.1s", "Select max Prediction for Silent Aim", {"0.2", "0.3", "0.4"}, function(selected)
     local num = tonumber(selected)
     if num then
@@ -101,6 +102,7 @@ Section:NewDropdown("・Prediction Future | Default 0.1s", "Select max Predictio
     end
 end)
 
+-- Silent Aim Distance Limit Dropdown
 Section:NewDropdown("・Distance Limit | Default 1000m", "Select max distance for aimbot", {"200", "400", "600"}, function(selected)
     local num = tonumber(selected)
     if num then
@@ -109,6 +111,7 @@ Section:NewDropdown("・Distance Limit | Default 1000m", "Select max distance fo
     end
 end)
 
+-- Target Dropdown
 for _, plr in ipairs(Players:GetPlayers()) do
     if plr ~= Players.LocalPlayer then
         table.insert(PlayerList, plr.Name)
@@ -137,16 +140,19 @@ Players.PlayerAdded:Connect(RefreshPlayerList)
 Players.PlayerRemoving:Connect(RefreshPlayerList)
 RefreshPlayerList()
 
+-- Godhuman Z Skills toggle
 local ZSkillToggle = Section:NewToggle("・GodhumanZ Aimlock", "I only set Godhuman", function(state)
     ZSkillModule:SetZSkills(state)
     Settings["ZSkills"] = state
 end)
 
+-- Main Highlight toggle
 local HighlightToggle = Section:NewToggle("・Main Highlight", "Current Target Highlighted", function(state)
     SilentAimModule:SetHighlight(state)
     Settings["Highlight"] = state
 end)
 
+-- Z|M1 Skills toggle
 local ZskillMOneToggle = Section:NewToggle("・Z|M1 Skills(except Godhuman Z)", "Silent Aim That Work Some Skills", function(state)
     SilentAimModule:SetZSkillorM1(state)
     Settings["Zskillmone"] = state
@@ -356,13 +362,10 @@ OthersStuffsModule:ApplySettings(Settings, {
     ESP = ESPModule,
     Stuffs = StuffsModule,
     Ui = UiSettingsModule,
-    Zskill= ZSkillModule
+    Zskill = ZSkillModule
 }, {
-    AimlockPlayers = AimlockPlayersToggle,
     AimlockPlayersMiniTogglePlayers = AimlockPlayersMiniTogglePlayersToggle,
-    AimlockNPC = AimlockNPCToggle,
-    SilentAimPlayers = SilentAimPlayersToggle,
-    SilentAimNPC = SilentAimNPCToggle,
+    SilentMiniToggle = SilentMiniToggleToggle, -- <- tylko jeden toggle
     ESPPlayers = ESPPlayersToggle,
     AntiAFK = AntiAFKToggle,
     FpsOrPings = FpsOrPingsToggle,
@@ -379,8 +382,6 @@ OthersStuffsModule:ApplySettings(Settings, {
     AuraSkill = AuraSkillToggle,
     V3Skill = V3SkillToggle,
     Highlight = HighlightToggle,
-    SilentMiniToggleNPC = SilentMiniToggleNPCToggle,
-    SilentMiniTogglePlayers = SilentMiniTogglePlayersToggle,
     Zskillmone = ZskillMOneToggle,
     SilentAimPediction = SilentAimPedictionToggle,
     Dodge = DodgeToggle,
