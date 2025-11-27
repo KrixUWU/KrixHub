@@ -2,6 +2,7 @@ local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/land9
 local AimlockModule = loadstring(game:HttpGet("https://raw.githubusercontent.com/jaanu91/Ip/refs/heads/main/Dk"))()
 local ESPModule = loadstring(game:HttpGet("https://raw.githubusercontent.com/jaanu91/Ip/refs/heads/main/Gk"))()
 local SilentAimModule = loadstring(game:HttpGet("https://raw.githubusercontent.com/jaanu91/Ip/refs/heads/main/Bg"))()
+local JumpBoostModule = loadstring(game:HttpGet("https://raw.githubusercontent.com/KrixUWU/KrixHub/refs/heads/main/jumpboostmodule"))()
 local StuffsModule = loadstring(game:HttpGet("https://raw.githubusercontent.com/jaanu91/Ip/refs/heads/main/Stuf"))()
 local OthersStuffsModule = loadstring(game:HttpGet("https://raw.githubusercontent.com/jaanu91/Ip/refs/heads/main/Mot"))()
 local UiSettingsModule = loadstring(game:HttpGet("https://raw.githubusercontent.com/jaanu91/Ip/refs/heads/main/Vot"))()
@@ -149,4 +150,264 @@ end)
 local ZskillMOneToggle = Section:NewToggle("・Z|M1 Skills(except Godhuman Z)", "Silent Aim That Work Some Skills", function(state)
     SilentAimModule:SetZSkillorM1(state)
     Settings["Zskillmone"] = state
+end)
+
+local Tab = Window:NewTab("・Features")
+local Section = Tab:NewSection("・Settings")
+
+local ESPPlayersToggle = Section:NewToggle("・ESP Players", "Toggle Player ESP", function(state)
+    ESPModule:SetESP(state)
+    Settings["ESPPlayers"] = state
+end)
+
+local FastAttackToggle = Section:NewToggle("・Fast Attack", "Fast Attack", function(state)
+    StuffsModule:SetFastAttack(state)
+    Settings["FastAttack"] = state
+end)
+
+local V3SkillToggle = Section:NewToggle("・V3 Skill", "Auto activate V3 ability", function(state)
+    ESPModule:SetV3(state)
+    Settings["V3Skill"] = state
+end)
+
+local V4Toggle = Section:NewToggle("・Auto V4", "Auto V4 Transform", function(state)
+    UiSettingsModule:SetV4(state)
+    Settings["V4"] = state
+end)
+
+local WalkonWaterToggle = Section:NewToggle("・Walk on Water", "Travel in Water", function(state)
+    StuffsModule:SetWalkWater(state)
+    Settings["WalkonWater"] = state
+end)
+
+local LavaToggle = Section:NewToggle("・Remove Lava", "Remove Lava", function(state)
+    StuffsModule:SetLava(state)
+    Settings["Lava"] = state
+end)
+
+local FogToggle = Section:NewToggle("・Remove Fog", "Remove Fog", function(state)
+    StuffsModule:SetFog(state)
+    Settings["Fog"] = state
+end)
+
+local BunnyHopToggle = Section:NewToggle("・Bunny hop", "Toggle Bunnyhop", function(state)
+    ESPModule:SetBunnyhop(state)
+    Settings["BunnyHop"] = state
+end)
+
+local AuraSkillToggle = Section:NewToggle("・Aura Skill", "Auto activate Buso", function(state)
+    ESPModule:SetBuso(state)
+    Settings["AuraSkill"] = state
+end)
+
+local FpsOrPingsToggle = Section:NewToggle("・Fps Or Pings", "Display Ping or Fps", function(state)
+    StuffsModule:SetPingsOrFps(state)
+    Settings["FpsOrPings"] = state
+end)
+
+Section:NewTextBox("Speed Hack", "WalkSpeedValue", function(speedfunc)
+    local num = tonumber(speedfunc)
+    if num then
+        getgenv().WalkSpeedValue = num
+        UiSettingsModule:SetWalkSpeed(num)
+    end
+end)
+
+local FpsBoostToggle = Section:NewToggle("・Fps Boost", "Increase Fps", function(state)
+    StuffsModule:SetFpsBoost(state)
+    Settings["FpsBoost"] = state
+end)
+
+local INFEnergyToggle = Section:NewToggle("・INF Energy", "Max Energy", function(state)
+    StuffsModule:SetINFEnergy(state)
+    Settings["INFEnergy"] = state
+end)
+
+local AntiAFKToggle = Section:NewToggle("・AntiAfk", "AntiAfk only on before you off", function(state)
+    ESPModule:SetAntiAfk(state)
+    Settings["AntiAFK"] = state
+end)
+
+Section:NewTextBox("Jump Power", "JumpValue", function(jumpfunc)
+  getgenv().JumpValue = jumpfunc
+    if getgenv().JumpValue then
+        game:GetService("Players").LocalPlayer.Character.Humanoid.JumpPower = getgenv().JumpValue
+    end
+end)
+
+local AutoKenToggle = Section:NewToggle("・Auto Ken", " AutoKen", function(state)
+    SilentAimModule:SetAutoKen(state)
+    Settings["AutoKen"] = state
+end)
+
+local DodgeToggle = Section:NewToggle("・Dodge no cd", "Dodge no cd", function(state)
+    ESPModule:SetNoDodgeCD(state)
+    Settings["Dodge"] = state
+end)
+
+local OpponentToggle = Section:NewToggle("・Target Info(Name/Health)", "Info Of Target", function(state)
+    ZSkillModule:SetInfo(state)
+    Settings["Opponent"] = state
+end)
+
+local Tab = Window:NewTab("🍈・Fruit Notify")
+local Section = Tab:NewSection("・fruit check")
+
+local FruitCheckToggle = Section:NewToggle("・Spawned Fruit Check", "Check Fruit Spawned", function(state)
+    UiSettingsModule:SetFruitCheck(state)
+    Settings["FruitCheck"] = state
+end)
+
+local TeleportFruitToggle = Section:NewToggle("・Bring Fruits", "It take few seconds to bring fruits", function(state)
+    UiSettingsModule:SetTeleportFruit(state)
+    Settings["TeleportFruit"] = state
+end)
+
+local Tab = Window:NewTab("⚡️・RTX")
+local Section = Tab:NewSection(❄️・RTX VISUALS")
+
+Section:NewDropdown("・RTX Graphics Mode", "Choose between Autumn or Summer or Spring or Winter", {"Autumn", "Summer", "Spring", "Winter"}, function(selected)
+    ESPModule:SetRTXMode(selected)
+    Settings["RTXMode"] = selected
+end)
+
+local Tab = Window:NewTab("⚙・Settings Manager")
+local Section = Tab:NewSection("💾・Settings")
+
+Section:NewTextBox("Paste Job Id Here", "Paste JobId and press Enter", function(jobid)
+    if jobid and jobid ~= "" then
+        TeleportService:TeleportToPlaceInstance(game.PlaceId, jobid, Players.LocalPlayer)
+    end
+end)
+
+Section:NewButton("Save Current Settings", "Save all current settings", function()
+    OthersStuffsModule.SaveSettings(Settings)
+    game:GetService("StarterGui"):SetCore("SendNotification", {
+        Title = "Sapi Hub",
+        Text = "Settings Saved!",
+        Duration = 4
+    })
+end)
+
+Section:NewButton("Reset Settings", "Clear saved settings", function()
+    OthersStuffsModule.ResetSettings()
+    Settings = {} -- also clear local
+    game:GetService("StarterGui"):SetCore("SendNotification", {
+        Title = "Sapi Hub",
+        Text = "Settings Reset!",
+        Duration = 4
+    })
+end)
+
+Section:NewButton("Rejoin Server", "Rejoin your server", function()
+    StuffsModule:SetRejoinServer()
+end)
+
+Section:NewDropdown("・Global Text Font", "Change font for all text", {
+    "Arcade",
+    "Cartoon",
+    "SciFi",
+    "Fantasy",
+    "Antique",
+    "Garamond",
+    "RobotoMono",
+    "FredokaOne",
+    "LuckiestGuy",
+    "PermanentMarker",
+    "SpecialElite",
+    "Oswald",
+    "Nunito"
+}, function(selected)
+    local fontEnum = Enum.Font[selected]
+    if fontEnum then
+        ESPModule:SetGlobalFont(fontEnum)
+        Settings["GlobalFont"] = selected
+    else
+        warn("Font not found:", selected)
+    end
+end)
+
+Section:NewDropdown("Select Theme", "Choose a color theme", UiSettingsModule:getThemeNames(), function(selected)
+    local newColor = UiSettingsModule.themes[selected]
+    if newColor then
+        UiSettingsModule:updateSchemeColor(newColor, Library)
+    end
+end)
+
+Section:NewDropdown("Select Background Theme", "Choose a color background", UiSettingsModule:getBackgroundThemeNames(), function(selected)
+    local newColor = UiSettingsModule.backgroundThemes[selected]
+    if newColor then
+        UiSettingsModule:updateBackgroundColor(newColor, Library)
+    end
+end)
+
+Section:NewDropdown("Select TextColor", "Choose a textcolor", UiSettingsModule:getThemeNames(), function(selected)
+    local newColor = UiSettingsModule.themes[selected]
+    if newColor then
+        UiSettingsModule:updateTextColor(newColor, Library)
+    end
+end)
+
+Settings = OthersStuffsModule.LoadSettings()
+
+OthersStuffsModule:ApplySettings(Settings, {
+    Aimlock = AimlockModule,
+    SilentAim = SilentAimModule,
+    ESP = ESPModule,
+    Stuffs = StuffsModule,
+    Ui = UiSettingsModule,
+    Zskill= ZSkillModule
+}, {
+    AimlockPlayers = AimlockPlayersToggle,
+    AimlockPlayersMiniTogglePlayers = AimlockPlayersMiniTogglePlayersToggle,
+    AimlockNPC = AimlockNPCToggle,
+    SilentAimPlayers = SilentAimPlayersToggle,
+    SilentAimNPC = SilentAimNPCToggle,
+    ESPPlayers = ESPPlayersToggle,
+    AntiAFK = AntiAFKToggle,
+    FpsOrPings = FpsOrPingsToggle,
+    FpsBoost = FpsBoostToggle,
+    INFEnergy = INFEnergyToggle,
+    FastAttack = FastAttackToggle,
+    WalkonWater = WalkonWaterToggle,
+    V4 = V4Toggle,
+    FruitCheck = FruitCheckToggle,
+    TeleportFruit = TeleportFruitToggle,
+    AutoKen = AutoKenToggle,
+    ZSkills = ZSkillToggle,
+    BunnyHop = BunnyHopToggle,
+    AuraSkill = AuraSkillToggle,
+    V3Skill = V3SkillToggle,
+    Highlight = HighlightToggle,
+    SilentMiniToggleNPC = SilentMiniToggleNPCToggle,
+    SilentMiniTogglePlayers = SilentMiniTogglePlayersToggle,
+    Zskillmone = ZskillMOneToggle,
+    SilentAimPediction = SilentAimPedictionToggle,
+    Dodge = DodgeToggle,
+    Lava = LavaToggle,
+    Fog = FogToggle
+})
+
+OthersStuffsModule.StartFruitNotifier()
+
+UserInputService.InputBegan:Connect(function(input, gameProcessed)
+    if not gameProcessed and input.KeyCode == Enum.KeyCode.M then
+        Library:ToggleUI()
+		toggleButton.Visible = not toggleButton.Visible
+    end
+end)
+
+UserInputService.InputBegan:Connect(function(input, gameProcessed)
+    if not gameProcessed and UserInputService.KeyboardEnabled and input.KeyCode == Enum.KeyCode.G then
+
+        Settings["SilentAimPlayers"] = not Settings["SilentAimPlayers"]
+        SilentAimModule:SetPlayerSilentAim(Settings["SilentAimPlayers"])
+        if SilentAimPlayersToggle then
+            SilentAimPlayersToggle:UpdateToggle(Settings["SilentAimPlayers"])
+        end
+    end
+end)
+
+toggleButton.MouseButton1Click:Connect(function()
+    Library:ToggleUI()
 end)
