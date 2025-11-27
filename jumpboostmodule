@@ -1,9 +1,6 @@
 local JumpBoostModule = {}
 
 local player = game.Players.LocalPlayer
-local char = player.Character or player.CharacterAdded:Wait()
-local humanoid = char:WaitForChild("Humanoid")
-local hrp = char:WaitForChild("HumanoidRootPart")
 local UIS = game:GetService("UserInputService")
 
 local jumpPower = 265
@@ -11,8 +8,28 @@ local upForce = 265
 local bv = nil
 local holding = false
 
+-- referencje do humanoida i HRP, będą aktualizowane przy respawnie
+local humanoid
+local hrp
+
+local function refreshCharacter()
+	local char = player.Character or player.CharacterAdded:Wait()
+	humanoid = char:WaitForChild("Humanoid")
+	hrp = char:WaitForChild("HumanoidRootPart")
+end
+
+refreshCharacter()
+
+player.CharacterAdded:Connect(function()
+	refreshCharacter()
+	if holding then
+		startUpBoost()
+	end
+end)
+
 -- funkcje boostu
-local function startUpBoost()
+function startUpBoost()
+	if not humanoid or not hrp then return end
 	humanoid.JumpPower = jumpPower
 	humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
 	if bv then bv:Destroy() end
@@ -22,9 +39,11 @@ local function startUpBoost()
 	bv.Parent = hrp
 end
 
-local function stopUpBoost()
+function stopUpBoost()
 	if bv then bv:Destroy() bv = nil end
-	humanoid.JumpPower = 50
+	if humanoid then
+		humanoid.JumpPower = 50
+	end
 end
 
 -- GUI
