@@ -3,94 +3,85 @@ local RunService = game:GetService("RunService")
 
 local player = Players.LocalPlayer
 
-local function setupCharacter(char)
-    local HRP = char:WaitForChild("HumanoidRootPart")
-    local Hum = char:WaitForChild("Humanoid")
+local function init(char)
+	local hrp = char:WaitForChild("HumanoidRootPart")
+	local hum = char:WaitForChild("Humanoid")
 
-    RunService.RenderStepped:Connect(function()
-        if _G.tpWalkEnabled then
-            local dir = Hum.MoveDirection
-
-            if dir.Magnitude > 0 then
-                HRP.CFrame = CFrame.new(HRP.Position, HRP.Position + dir)
-                HRP.CFrame = HRP.CFrame + dir * _G.speed
-            end
-        end
-    end)
+	RunService.RenderStepped:Connect(function()
+		if _G.tpWalkEnabled then
+			local dir = hum.MoveDirection
+			if dir.Magnitude > 0 then
+				hrp.CFrame = CFrame.new(hrp.Position, hrp.Position + dir)
+				hrp.CFrame = hrp.CFrame + dir * (_G.speed or 2)
+			end
+		end
+	end)
 end
 
-player.CharacterAdded:Connect(setupCharacter)
-if player.Character then setupCharacter(player.Character) end
+player.CharacterAdded:Connect(init)
+if player.Character then init(player.Character) end
 
 local player = game.Players.LocalPlayer
 local playerGui = player:WaitForChild("PlayerGui")
 
-local ScreenGui = Instance.new("ScreenGui")
-ScreenGui.ResetOnSpawn = false
-ScreenGui.Parent = playerGui
-
--- ULTRA MINI FRAME
-local Frame = Instance.new("Frame")
-Frame.Size = UDim2.new(0, 55, 0, 40) -- JESZCZE MNIEJSZE
-Frame.Position = UDim2.new(0, 0, 0.4, 0)
-Frame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
-Frame.BorderSizePixel = 0
-Frame.Active = true
-Frame.Draggable = true
-Frame.Parent = ScreenGui
-
-local UIStroke = Instance.new("UIStroke", Frame)
-UIStroke.Thickness = 1
-UIStroke.Color = Color3.fromRGB(0, 255, 0)
-
--- MINI TYTUŁ
-local title = Instance.new("TextLabel", Frame)
-title.Size = UDim2.new(1, 0, 0, 10)
-title.Position = UDim2.new(0, 0, 0, 0)
-title.BackgroundTransparency = 1
-title.Text = "TP"
-title.TextColor3 = Color3.fromRGB(255, 255, 255)
-title.TextScaled = true
-
--- MINI TOGGLE
-local Toggle = Instance.new("TextButton", Frame)
-Toggle.Size = UDim2.new(1, -6, 0, 12)
-Toggle.Position = UDim2.new(0, 3, 0, 12)
-Toggle.Text = "OFF"
-Toggle.TextScaled = true
-Toggle.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
-Toggle.BorderSizePixel = 0
-
--- MINI SPEEDBOX
-local SpeedBox = Instance.new("TextBox", Frame)
-SpeedBox.Size = UDim2.new(1, -6, 0, 12)
-SpeedBox.Position = UDim2.new(0, 3, 0, 25)
-SpeedBox.PlaceholderText = "spd"
-SpeedBox.ClearTextOnFocus = false
-SpeedBox.TextScaled = true
-SpeedBox.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
-SpeedBox.TextColor3 = Color3.fromRGB(255, 255, 255)
-SpeedBox.BorderSizePixel = 0
-
--- LOGIKA
+-- GLOBALNE
 _G.tpWalkEnabled = false
 _G.speed = 2
 
-Toggle.MouseButton1Click:Connect(function()
-    _G.tpWalkEnabled = not _G.tpWalkEnabled
-    Toggle.Text = _G.tpWalkEnabled and "ON" or "OFF"
+-- GUI
+local gui = Instance.new("ScreenGui")
+gui.ResetOnSpawn = false
+gui.Parent = playerGui
+
+local frame = Instance.new("Frame")
+frame.Size = UDim2.new(0, 60, 0, 45) -- ultra mini
+frame.Position = UDim2.new(0, 0, 0.5, 0)
+frame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+frame.BorderSizePixel = 0
+frame.Active = true
+frame.Draggable = true
+frame.Parent = gui
+
+local stroke = Instance.new("UIStroke", frame)
+stroke.Thickness = 1
+stroke.Color = Color3.fromRGB(0,255,0)
+
+local title = Instance.new("TextLabel", frame)
+title.Size = UDim2.new(1, 0, 0, 12)
+title.BackgroundTransparency = 1
+title.Text = "TP"
+title.TextColor3 = Color3.fromRGB(255,255,255)
+title.TextScaled = true
+
+local toggle = Instance.new("TextButton", frame)
+toggle.Size = UDim2.new(1, -8, 0, 14)
+toggle.Position = UDim2.new(0, 4, 0, 13)
+toggle.BackgroundColor3 = Color3.fromRGB(60,60,60)
+toggle.BorderSizePixel = 0
+toggle.Text = "OFF"
+toggle.TextScaled = true
+
+toggle.MouseButton1Click:Connect(function()
+	_G.tpWalkEnabled = not _G.tpWalkEnabled
+	toggle.Text = _G.tpWalkEnabled and "ON" or "OFF"
 end)
 
-SpeedBox.FocusLost:Connect(function()
-    local val = tonumber(SpeedBox.Text)
-    if val then
-        _G.speed = val
-    else
-        SpeedBox.Text = ""
-        SpeedBox.PlaceholderText = "??"
-    end
-end)
-        SpeedBox.Text = ""
-        SpeedBox.PlaceholderText = "??"
-    end
+local box = Instance.new("TextBox", frame)
+box.Size = UDim2.new(1, -8, 0, 14)
+box.Position = UDim2.new(0, 4, 0, 29)
+box.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+box.TextColor3 = Color3.fromRGB(255,255,255)
+box.BorderSizePixel = 0
+box.PlaceholderText = "spd"
+box.TextScaled = true
+box.ClearTextOnFocus = false
+
+box.FocusLost:Connect(function()
+	local v = tonumber(box.Text)
+	if v then
+		_G.speed = v
+	else
+		box.Text = ""
+		box.PlaceholderText = "err"
+	end
 end)
