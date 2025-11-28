@@ -25,72 +25,62 @@ if player.Character then setupCharacter(player.Character) end
 local player = game.Players.LocalPlayer
 local playerGui = player:WaitForChild("PlayerGui")
 
--- GUI
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.ResetOnSpawn = false
 ScreenGui.Parent = playerGui
 
 local Frame = Instance.new("Frame")
-Frame.Size = UDim2.new(0, 160, 0, 120)
-Frame.Position = UDim2.new(0, 0, 0.4, 0) -- dotyka lewej strony ekranu
+Frame.Size = UDim2.new(0, 80, 0, 60) -- 2x mniejsze
+Frame.Position = UDim2.new(0, 0, 0.4, 0)
 Frame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
 Frame.BorderSizePixel = 0
 Frame.Active = true
-Frame.Draggable = true  -- DRAGGABLE
+Frame.Draggable = true
 Frame.Parent = ScreenGui
 
 local UIStroke = Instance.new("UIStroke", Frame)
-UIStroke.Thickness = 2
+UIStroke.Thickness = 1
 UIStroke.Color = Color3.fromRGB(0, 255, 0)
 
 local title = Instance.new("TextLabel", Frame)
-title.Size = UDim2.new(1, 0, 0, 20)
+title.Size = UDim2.new(1, 0, 0, 12)
 title.BackgroundTransparency = 1
-title.Text = "TP Walk Menu"
+title.Text = "TPW"
 title.TextColor3 = Color3.fromRGB(255, 255, 255)
 title.TextScaled = true
 
 local Toggle = Instance.new("TextButton", Frame)
-Toggle.Size = UDim2.new(1, -20, 0, 30)
-Toggle.Position = UDim2.new(0, 10, 0, 25)
-Toggle.Text = "TP Walk: OFF"
+Toggle.Size = UDim2.new(1, -10, 0, 15)
+Toggle.Position = UDim2.new(0, 5, 0, 15)
+Toggle.Text = "OFF"
 Toggle.TextScaled = true
 Toggle.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
 Toggle.BorderSizePixel = 0
 
-local SpeedLabel = Instance.new("TextLabel", Frame)
-SpeedLabel.Size = UDim2.new(1, -20, 0, 20)
-SpeedLabel.Position = UDim2.new(0, 10, 0, 60)
-SpeedLabel.Text = "Speed:"
-SpeedLabel.TextScaled = true
-SpeedLabel.BackgroundTransparency = 1
-SpeedLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-
 local SpeedBox = Instance.new("TextBox", Frame)
-SpeedBox.Size = UDim2.new(1, -20, 0, 25)
-SpeedBox.Position = UDim2.new(0, 10, 0, 85)
-SpeedBox.PlaceholderText = "Wpisz speed"
+SpeedBox.Size = UDim2.new(1, -10, 0, 15)
+SpeedBox.Position = UDim2.new(0, 5, 0, 35)
+SpeedBox.PlaceholderText = "Speed"
 SpeedBox.ClearTextOnFocus = false
 SpeedBox.TextScaled = true
 SpeedBox.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
 SpeedBox.TextColor3 = Color3.fromRGB(255, 255, 255)
 SpeedBox.BorderSizePixel = 0
 
--- LOGIKA
 _G.tpWalkEnabled = false
 _G.speed = 2
 
 Toggle.MouseButton1Click:Connect(function()
     _G.tpWalkEnabled = not _G.tpWalkEnabled
-    Toggle.Text = "TP Walk: " .. (_G.tpWalkEnabled and "ON" or "OFF")
+    Toggle.Text = _G.tpWalkEnabled and "ON" or "OFF"
 end)
 
-SpeedBox.FocusLost:Connect(function(enterPressed)
+SpeedBox.FocusLost:Connect(function()
     local val = tonumber(SpeedBox.Text)
     if val then
         _G.speed = val
     else
         SpeedBox.Text = ""
-        SpeedBox.PlaceholderText = "Nieprawidłowe!"
+        SpeedBox.PlaceholderText = "??"
     end
 end)
