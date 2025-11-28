@@ -29,8 +29,9 @@ local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.ResetOnSpawn = false
 ScreenGui.Parent = playerGui
 
+-- ULTRA MINI FRAME
 local Frame = Instance.new("Frame")
-Frame.Size = UDim2.new(0, 80, 0, 60) -- 2x mniejsze
+Frame.Size = UDim2.new(0, 55, 0, 40) -- JESZCZE MNIEJSZE
 Frame.Position = UDim2.new(0, 0, 0.4, 0)
 Frame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
 Frame.BorderSizePixel = 0
@@ -42,31 +43,36 @@ local UIStroke = Instance.new("UIStroke", Frame)
 UIStroke.Thickness = 1
 UIStroke.Color = Color3.fromRGB(0, 255, 0)
 
+-- MINI TYTUŁ
 local title = Instance.new("TextLabel", Frame)
-title.Size = UDim2.new(1, 0, 0, 12)
+title.Size = UDim2.new(1, 0, 0, 10)
+title.Position = UDim2.new(0, 0, 0, 0)
 title.BackgroundTransparency = 1
-title.Text = "TPW"
+title.Text = "TP"
 title.TextColor3 = Color3.fromRGB(255, 255, 255)
 title.TextScaled = true
 
+-- MINI TOGGLE
 local Toggle = Instance.new("TextButton", Frame)
-Toggle.Size = UDim2.new(1, -10, 0, 15)
-Toggle.Position = UDim2.new(0, 5, 0, 15)
+Toggle.Size = UDim2.new(1, -6, 0, 12)
+Toggle.Position = UDim2.new(0, 3, 0, 12)
 Toggle.Text = "OFF"
 Toggle.TextScaled = true
 Toggle.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
 Toggle.BorderSizePixel = 0
 
+-- MINI SPEEDBOX
 local SpeedBox = Instance.new("TextBox", Frame)
-SpeedBox.Size = UDim2.new(1, -10, 0, 15)
-SpeedBox.Position = UDim2.new(0, 5, 0, 35)
-SpeedBox.PlaceholderText = "Speed"
+SpeedBox.Size = UDim2.new(1, -6, 0, 12)
+SpeedBox.Position = UDim2.new(0, 3, 0, 25)
+SpeedBox.PlaceholderText = "spd"
 SpeedBox.ClearTextOnFocus = false
 SpeedBox.TextScaled = true
 SpeedBox.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
 SpeedBox.TextColor3 = Color3.fromRGB(255, 255, 255)
 SpeedBox.BorderSizePixel = 0
 
+-- LOGIKA
 _G.tpWalkEnabled = false
 _G.speed = 2
 
@@ -80,6 +86,10 @@ SpeedBox.FocusLost:Connect(function()
     if val then
         _G.speed = val
     else
+        SpeedBox.Text = ""
+        SpeedBox.PlaceholderText = "??"
+    end
+end)
         SpeedBox.Text = ""
         SpeedBox.PlaceholderText = "??"
     end
